@@ -1,39 +1,42 @@
 <form id="login" method="post">
-  <input type="email" id="email" name="email" value="" placeholder="Tu Email..">
-  <input type="password" id="password" name="password" value="" placeholder="Tu Contraseña..">
+  <input type="email" name="email" value="" placeholder="Tu Email..">
+  <input type="password" name="password" value="" placeholder="Tu Contraseña..">
   <input type="submit" value="Login">
 </form>
 
 
 <script type="text/javascript">
-// Tomo el formluario por Id
-const formLogin = document.querySelector('#login')
-// Instancio un formData con los datos del formulario para enviar
-// const formData = new FormData(formLogin)
+  // Tomo el formluario por Id
+  const formLogin = document.querySelector('#login')
+  // Instancio un formData con los datos del formulario para enviar
+  // const formData = new FormData(formLogin)
 
-console.log('Hola')
+  console.log('Hola')
 
-//Le agregamos un listener al Formulario
-formLogin.addEventListener('submit', event => {
-  //Esto es para que el comportamiento del formulario no sea recargar la pagina
-  event.preventDefault();
+  //Le agregamos un listener al Formulario
+  formLogin.addEventListener('submit', event => {
+    //Esto es para que el comportamiento del formulario no sea recargar la pagina
+    event.preventDefault();
 
-  const formData = new FormData(formLogin)
-  var objJSON = {}
+    // Tomo ls datos del formulario
+    const formData = new FormData(formLogin)
+    //
+    var objJSON = {}
 
-  formData.forEach(function(value,key) {
-    objJSON[key] = value
- })
+    formData.forEach(function(value, key) {
+      objJSON[key] = value
+    })
 
-  //Uso fetch para mandar los datos al back
-  fetch('/api/signin', {
-    body: JSON.stringify(objJSON),
-    method: 'POST',
-    headers: {'Content-Type':'application/json;charset=UTF-8'}
+    //Uso fetch para mandar los datos al back
+    fetch('/api/signin', {
+        body: JSON.stringify(objJSON),
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8'
+        }
+      })
+      //El fetch recibe una promise
+      .then(res => res.json())
+      .then(data => console.log(data))
   })
-  //El fetch recibe una promise
-  .then(res => res.json())
-  .then(data => console.log(data))
-})
-
 </script>

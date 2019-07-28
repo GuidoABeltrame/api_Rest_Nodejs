@@ -16,10 +16,11 @@ function signup (req, res) {
 }
 
 function signin (req, res) {
-  User.find({ email: req.body.email }, (err, user) => {
+  User.find({
+    email: req.body.email
+  }, (err, user) => {
     if (err) return res.status(500).send({ message: err })
     if (user.length === 0) return res.status(404).send({ message: 'No existe el usuario' })
-
     req.user = user
     res.status(200).send({
       message: 'Te has logeado correctamente',
@@ -32,7 +33,6 @@ function getUsers (req, res) {
   User.find({}, (err, users) => {
     if (err) return res.status(500).send({ message: `Error al realizar la consulta de usuarios: ${err}` })
     if (users.length === 0) return res.status(404).send({ message: 'No existen usuarios registrados' })
-
     return res.status(200).send({ users })
   })
 }
@@ -43,8 +43,9 @@ function getUserById (req, res) {
   User.findById(userId, (err, user) => {
     if (err) return res.status(500).send({ message: `Error al realizar la consulta de usuario: ${err}` })
     if (!user) return res.status(404).send({ message: `El usuario no existe` })
-
-    res.status(200).send({ user: user })
+    res.status(200).send({
+      user: user
+    })
   })
 }
 
@@ -53,9 +54,9 @@ function deleteUser (req, res) {
 
   User.findById(userId, (err, user) => {
     if (err) res.status(500).send({ message: `Error al borrar el usuario: ${userId}` })
-
     user.remove(err => {
       if (err) res.status(500).send({ message: `Error al borrar el usuario: ${userId}` })
+
       res.status(200).send({ message: `El usuario ${userId} ha sido eliminado` })
     })
   })

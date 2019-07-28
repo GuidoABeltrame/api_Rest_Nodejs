@@ -26,7 +26,7 @@ api.delete('/user/:userId', userCtrl.deleteUser)
 
 // Rutas privadas con el Middleware Auth. No uso auth.isAuth porque solo hay una funcion, por eso llamo directamente al archivo
 api.get('/private', auth, (req, res) => {
-  res.status(200).send({ message: 'Tienes acceso' })
+    res.status(200).send({ message: 'Tienes acceso' })
 })
 
 module.exports = api
